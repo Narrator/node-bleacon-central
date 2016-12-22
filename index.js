@@ -1,4 +1,6 @@
 var Bleacon = require('bleacon');
+//replace localhost with your server's IP;
+var socket = require('socket.io-client')('http://192.168.0.104:3000/scanner');
 
 //Bleacon.startScanning(); // scan for any bleacons
 
@@ -27,11 +29,15 @@ if(process.env.BEACON_COLOR === "red") {
   process.exit();
 }
 
-Bleacon.startScanning(beacon.uuid, beacon.major, beacon.minor); // scan for bleacons with a particular uuid. major, and minor
 
 Bleacon.on("discover", function (bleacon) {
-  console.log({
-    rssi: bleacon.rssi,
-    name: beacon.name
+  socket.emit('deviceData', {
+    name: beacon.name,
+    rssi: bleacon.rssi
   });
+});
+
+socket.on('connect', function(){
+  console.log('connected to server');
+  Bleacon.startScanning(beacon.uuid, beacon.major, beacon.minor); // scan for bleacons with a particular uuid. major, and minor
 });
