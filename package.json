@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "bleacon": "^0.5.1",
+    "dateformat": "^2.0.0",
+    "node-schedule": "^1.2.0",
     "socket.io-client": "^1.7.2"
   }
 }
